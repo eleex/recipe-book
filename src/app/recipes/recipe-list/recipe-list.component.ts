@@ -14,6 +14,16 @@ export class RecipeListComponent implements OnInit {
       'This is simply test',
       'https://i1.wp.com/www.eatthis.com/wp-content/uploads/2019/10/pumpkin-pad-thai-recipe.jpg'
     ),
+    new Recipe(
+      'A Test Recipe 2',
+      'This is simply test',
+      'https://i1.wp.com/www.eatthis.com/wp-content/uploads/2019/10/pumpkin-pad-thai-recipe.jpg'
+    ),
+    new Recipe(
+      'A Test Recipe 3',
+      'This is simply test',
+      'https://i1.wp.com/www.eatthis.com/wp-content/uploads/2019/10/pumpkin-pad-thai-recipe.jpg'
+    ),
   ];
 
   constructor() {}
