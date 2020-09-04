@@ -49,6 +49,18 @@
               class="form-control"
               formControlName="imagePath"
             />
+            <div
+              *ngIf="
+                recipeForm.get('imagePath').errors &&
+                recipeForm.get('imagePath').touched
+              "
+            >
+              <span
+                *ngIf="recipeForm.get('imagePath').errors.required"
+                class="text-danger"
+                >Image URL is required!</span
+              >
+            </div>
           </div>
         </div>
       </div>
@@ -71,6 +83,18 @@
               class="form-control"
               formControlName="description"
             ></textarea>
+            <div
+              *ngIf="
+                recipeForm.get('description').errors &&
+                recipeForm.get('description').touched
+              "
+            >
+              <span
+                *ngIf="recipeForm.get('description').errors.required"
+                class="text-danger"
+                >Description is required!</span
+              >
+            </div>
           </div>
         </div>
       </div>
