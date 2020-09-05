@@ -3,7 +3,6 @@ import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { RecipeService } from './../recipe.service';
-import { Recipe } from './../recipe.model';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -30,13 +29,6 @@ export class RecipeEditComponent implements OnInit {
   }
 
   onSubmit(): void {
-    // const newRecipe: Recipe = new Recipe(
-    //   this.recipeForm.value.name,
-    //   this.recipeForm.value.description,
-    //   this.recipeForm.value.imagePath,
-    //   this.recipeForm.value.ingredients
-    // );
-
     if (this.editMode) {
       this.recipeService.updateRecipe(this.index, this.recipeForm.value);
     } else {
@@ -48,6 +40,11 @@ export class RecipeEditComponent implements OnInit {
 
   onCancel(): void {
     this.router.navigate(['/recipes']);
+  }
+
+  onDeleteIngredient(index: number): void {
+    (this.recipeForm.get('ingredients') as FormArray).removeAt(index);
+    console.log(this.recipeForm.value);
   }
 
   onAddIngredient(): void {
