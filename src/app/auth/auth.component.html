@@ -1,14 +1,25 @@
 <div class="row">
   <div class="col-xs-12 col-md-6 col-md-offset-3">
     <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
-      <div class="form-group relative">
-        <label for="email">E-Mail</label>
+      <div class="form-group">
+        <label for="email">Email</label>
         <input
           type="email"
           id="email"
           class="form-control"
           formControlName="email"
         />
+        <div
+          class="alert alert-danger"
+          *ngIf="authForm.get('email').errors && authForm.get('email').touched"
+        >
+          <span *ngIf="authForm.get('email').errors.required"
+            >Email is required!</span
+          >
+          <span *ngIf="authForm.get('email').errors.email"
+            >Incorrect email!</span
+          >
+        </div>
       </div>
       <div class="form-group">
         <label for="password">Password</label>
@@ -18,6 +29,21 @@
           class="form-control"
           formControlName="password"
         />
+        <div
+          class="alert alert-danger"
+          *ngIf="
+            authForm.get('password').errors && authForm.get('password').touched
+          "
+        >
+          <span *ngIf="authForm.get('password').errors.required"
+            >Password is required!</span
+          >
+          <span *ngIf="authForm.get('password').errors.minlength"
+            >Password should be minimum
+            {{ authForm.get("password").errors.minlength.requiredLength }}
+            characters!</span
+          >
+        </div>
       </div>
       <div>
         <button

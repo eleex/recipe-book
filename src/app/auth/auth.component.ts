@@ -17,7 +17,7 @@ export class AuthComponent implements OnInit {
       email: new FormControl(null, [Validators.required, Validators.email]),
       password: new FormControl(null, [
         Validators.required,
-        Validators.maxLength(6),
+        Validators.minLength(6),
       ]),
     });
   }
