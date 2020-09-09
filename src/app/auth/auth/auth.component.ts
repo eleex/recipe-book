@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-auth',
@@ -7,12 +8,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AuthComponent implements OnInit {
   isLoginMode = true;
+  authForm: FormGroup;
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.authForm = new FormGroup({
+      email: new FormControl(null, [Validators.required, Validators.email]),
+      password: new FormControl(null, [
+        Validators.required,
+        Validators.maxLength(6),
+      ]),
+    });
+  }
 
   onSwitchMode(): void {
     this.isLoginMode = !this.isLoginMode;
+  }
+
+  onSubmit(): void {
+    console.log(this.authForm.value);
+    this.authForm.reset();
   }
 }
