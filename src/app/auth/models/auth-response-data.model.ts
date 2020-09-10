@@ -5,4 +5,6 @@ export interface AuthResponseData {
   kind: string;
   localId: string;
   refreshToken: string;
+  displayName?: string;
+  registered?: boolean;
 }

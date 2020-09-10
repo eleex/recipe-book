@@ -38,4 +38,37 @@ export class AuthService {
         })
       );
   }
+
+  login(user: AuthRequestData): Observable<AuthResponseData> {
+    user.returnSecureToken = true;
+
+    return this.http
+      .post<AuthResponseData>(
+        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${this.apiKey}`,
+        user
+      )
+      .pipe(
+        catchError((errorRes) => {
+          let errorMessage = 'An unknown error occurred!';
+
+          if (!errorRes.error && !errorRes.error.error) {
+            return throwError(errorMessage);
+          }
+
+          switch (errorRes.error.error.message) {
+            case 'EMAIL_NOT_FOUND':
+              errorMessage = 'This email not found!';
+              break;
+            case 'INVALID_PASSWORD':
+              errorMessage = 'The password is invalid!';
+              break;
+            case 'USER_DISABLED':
+              errorMessage =
+                'The user account has been disabled by an administrator!';
+              break;
+          }
+          return throwError(errorMessage);
+        })
+      );
+  }
 }
