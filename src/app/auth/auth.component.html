@@ -10,7 +10,7 @@
           formControlName="email"
         />
         <div
-          class="alert alert-danger"
+          class="text-danger auth-form--error"
           *ngIf="authForm.get('email').errors && authForm.get('email').touched"
         >
           <span *ngIf="authForm.get('email').errors.required"
@@ -30,7 +30,7 @@
           formControlName="password"
         />
         <div
-          class="alert alert-danger"
+          class="text-danger auth-form--error"
           *ngIf="
             authForm.get('password').errors && authForm.get('password').touched
           "

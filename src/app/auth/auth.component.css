@@ -1,3 +1,11 @@
+.form-group {
+  margin-bottom: 25px;
+}
+
 input.ng-invalid.ng-touched {
   border: 1px solid #a94442;
+}
+
+.auth-form--error {
+  position: absolute;
 }
