@@ -14,6 +14,7 @@ import { User } from './models/user.model';
 export class AuthService {
   apiKey = 'AIzaSyCO1CEnYSDHJFvNLfLpn5tfRJHY7D3O0DM';
   user = new BehaviorSubject<User>(null);
+  private tokenExpirationTimer: any;
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -79,13 +80,29 @@ export class AuthService {
     );
 
     if (loadedUser.token) {
+      const expirationDuration =
+        new Date(userData._tokenExpirationDate).getTime() - Date.now();
+
       this.user.next(loadedUser);
+      this.autoLogout(expirationDuration);
     }
   }
 
   logout(): void {
     this.user.next(null);
+    localStorage.removeItem('userData');
     this.router.navigate(['/auth']);
+
+    if (this.tokenExpirationTimer) {
+      clearTimeout(this.tokenExpirationTimer);
+    }
+    this.tokenExpirationTimer = null;
+  }
+
+  autoLogout(expirationDuration: number): void {
+    this.tokenExpirationTimer = setTimeout(() => {
+      this.logout();
+    }, expirationDuration);
   }
 
   private handleAuthentication(
@@ -99,6 +116,8 @@ export class AuthService {
 
     this.user.next(user);
     localStorage.setItem('userData', JSON.stringify(user));
+
+    this.autoLogout(expiresIn * 1000);
   }
 
   private handleError(errorRes: HttpErrorResponse): Observable<never> {
