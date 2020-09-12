@@ -32,7 +32,8 @@ const routes: Routes = [
     ],
   },
   { path: 'shopping-list', component: ShoppingListComponent },
-  { path: 'auth', component: AuthComponent },
+  { path: 'auth', component: AuthComponent, canActivate: [AuthGuard] },
+  { path: '**', redirectTo: '/recipes' },
 ];
 
 @NgModule({
