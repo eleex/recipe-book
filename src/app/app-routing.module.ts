@@ -32,7 +32,7 @@ const routes: Routes = [
     ],
   },
   { path: 'shopping-list', component: ShoppingListComponent },
-  { path: 'auth', component: AuthComponent, canActivate: [AuthGuard] },
+  { path: 'auth', component: AuthComponent },
   { path: '**', redirectTo: '/recipes' },
 ];
 
