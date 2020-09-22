@@ -3,6 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 import { AuthRequestData } from './models/auth-request-data';
 import { AuthResponseData } from './models/auth-response-data.model';
@@ -12,7 +13,6 @@ import { User } from './models/user.model';
   providedIn: 'root',
 })
 export class AuthService {
-  apiKey = 'AIzaSyCO1CEnYSDHJFvNLfLpn5tfRJHY7D3O0DM';
   user = new BehaviorSubject<User>(null);
   private tokenExpirationTimer: any;
 
@@ -23,7 +23,7 @@ export class AuthService {
 
     return this.http
       .post<AuthResponseData>(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${this.apiKey}`,
+        `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${environment.firebaseAPIKey}`,
         userData
       )
       .pipe(
@@ -44,7 +44,7 @@ export class AuthService {
 
     return this.http
       .post<AuthResponseData>(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${this.apiKey}`,
+        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.firebaseAPIKey}`,
         userData
       )
       .pipe(
