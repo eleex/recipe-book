@@ -5,9 +5,10 @@ import {
   HttpRequest,
   HttpEvent,
 } from '@angular/common/http';
-import { AuthService } from './auth.service';
 import { exhaustMap, take } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+
+import { AuthService } from './auth.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -20,13 +21,14 @@ export class AuthInterceptor implements HttpInterceptor {
     return this.authService.user.pipe(
       take(1),
       exhaustMap((user) => {
+        console.log('AuthInterceptor');
         if (!user) {
           return next.handle(req);
         } else {
           const modifiedReq = req.clone({
             params: req.params.set('auth', user.token),
           });
-
+          console.log('AuthInterceptor');
           return next.handle(modifiedReq);
         }
       })
